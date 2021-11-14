@@ -51,7 +51,9 @@ x-airflow-common:
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
     AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
     AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
-    AIRFLOW_CONN_MINIO_CONNECTION: s3://minio-access-key:minio-secret-key@127.0.0.1:9000
+    # S3 Connection to Minio (in .env) using the following pattern:
+    # AIRFLOW_CONN_MY_PROD_DATABASE=my-conn-type://login:password@host:port/schema?param1=val1&param2=val2
+    AIRFLOW_CONN_MINIO_CONNECTION: "${AIRFLOW_CONN_MINIO_CONNECTION}"
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'true'

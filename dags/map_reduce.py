@@ -6,6 +6,7 @@ from airflow.operators.python import PythonOperator
 from map_operator import MapOperator
 from reduce_operator import ReduceOperator
 
+# aws_conn_id=minio_connection
 MINIO_HOOK = 'minio_connection'
 INPUT_PATH = 'input_data/tweets.csv'
 OUTPUT_PATH = 'word_frequency.csv'
@@ -14,6 +15,7 @@ SPLIT_NUM = 10
 
 
 def init_s3(filename: str = INPUT_PATH, key: str = 'tweets.csv', **context):
+    # get s3 connection with minio via s3hook
     s3 = S3Hook(MINIO_HOOK)
     if not s3.get_bucket(MAIN_BUCKET):
         s3.create_bucket(MAIN_BUCKET)
