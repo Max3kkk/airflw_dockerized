@@ -12,12 +12,47 @@
 
 
 ## To launch:
+### 1. Build containers and initialize Apache Aiflow:
 
 ```Linux Shell
     docker-compose up --build -d airflow-init
-    sudo chmod -R 777 minio
     docker-compose up
 ```
+### 2. Grant permissions to folders created by minio and postgres 
+```Linux Shell
+    sudo chmod -R 777 minio
+    sudo chmod -R 777 postgres-data
+```
+### 3. Add connection to minio in Apache AIflow Admin panel:
+- go to `localhost:8080` login with (`user`: airflow, `password`: airflow)
+- go to admin > connections
+- add new connection with the following parameters:
+```
+    Coonn Id = local_minio
+    Conn Type = S3
 
-During `docker-compose up` you need to press `Ctrl-C` , run `sudo chmod -R 777 minio` and then again 
-`docker-compose up`. This is because you need to give a permission to a minio folder.
+    Extra:
+    {
+        "aws_access_key_id":"minio-access-key",
+        "aws_secret_access_key": "minio-secret-key",
+        "host": "http://minio:9000"
+    }
+ ```
+
+
+### 3. Add connection to postgres in Apache AIflow Admin panel:
+- go to `localhost:8080` login with (`user`: airflow, `password`: airflow)
+- go to admin > connections
+- add new connection with the following parameters:
+```
+    Coonn Id = postrgre_sql
+    Conn Type = Postgres
+    Host: db
+    Schema: tweets
+    Login: postgres
+    Password: postgres
+ ```
+### 4. Launch docker:
+```Linux Shell
+    docker-compose up
+```
